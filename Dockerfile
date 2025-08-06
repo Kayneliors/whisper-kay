@@ -1,18 +1,22 @@
 FROM python:3.10-slim
 
-# Install basic dependencies
-RUN apt-get update && apt-get install -y \
-    git ffmpeg libsndfile1 \
-    && rm -rf /var/lib/apt/lists/*
+# Install git and other dependencies
+RUN apt-get update && apt-get install -y git ffmpeg && apt-get clean
 
-# Set working directory
+# Set workdir
 WORKDIR /app
 
-# Copy code
-COPY . /app
+# Copy requirements
+COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Start server
-CMD ["python", "handler.py"]
+# Copy rest of the code
+COPY . .
+
+# Expose port (optional, if running server)
+EXPOSE 8000
+
+# Start the app (adjust if you're running something else)
+CMD ["python", "main.py"]
