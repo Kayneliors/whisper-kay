@@ -1,0 +1,2 @@
+# whisper-kay
+whisper diarization
