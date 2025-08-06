@@ -1,22 +1,17 @@
 FROM python:3.10-slim
 
-# Install git and other dependencies
-RUN apt-get update && apt-get install -y git ffmpeg && apt-get clean
+# Install system dependencies
+RUN apt-get update && apt-get install -y git
 
-# Set workdir
+# Set working directory
 WORKDIR /app
 
-# Copy requirements
+# Copy requirements and install dependencies
 COPY requirements.txt .
-
-# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy rest of the code
+# Copy the rest of your code
 COPY . .
 
-# Expose port (optional, if running server)
-EXPOSE 8000
-
-# Start the app (adjust if you're running something else)
-CMD ["python", "main.py"]
+# Set entrypoint or command
+CMD ["python", "app.py"]
